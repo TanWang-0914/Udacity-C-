@@ -285,7 +285,10 @@ long LinuxParser::UpTime(int pid) {
       var_list.push_back(var);
     }
   }  
-  starttime = std::stol(var_list[21], nullptr, 10)/sysconf(_SC_CLK_TCK);
-  uptime = LinuxParser::UpTime() - starttime;
-  return uptime;
+  if (var_list.size() >= 22) {
+    starttime = std::stol(var_list[21], nullptr, 10)/sysconf(_SC_CLK_TCK);
+    uptime = LinuxParser::UpTime() - starttime;
+    return uptime;
+  }
+  return -1;
 }
