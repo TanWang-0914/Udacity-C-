@@ -16,11 +16,6 @@ using std::vector;
 System::System(){
     Processor processor;
     cpu_ = processor;
-    vector<int> pids = LinuxParser::Pids();
-    for (int pid : pids) {
-        processes_.push_back(Process(pid));
-    }
-
 }
 
 // TODO: Return the system's CPU
@@ -28,6 +23,11 @@ Processor& System::Cpu() { return cpu_; }
 
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() {
+    processes_.clear();
+    vector<int> pids = LinuxParser::Pids();
+    for (int pid : pids) {
+        processes_.push_back(Process(pid));
+    }
     std::sort(processes_.begin(), processes_.end());
     return processes_; 
 }

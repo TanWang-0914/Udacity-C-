@@ -75,11 +75,10 @@ float LinuxParser::MemoryUtilization() {
   string line;
   std::ifstream stream(kProcDirectory + kMeminfoFilename);
   if (stream.is_open()){
-    std::getline(stream, line);
-    std::replace(line.begin(), line.end(), ':', ' ');
-    std::istringstream linestream(line);
-
-    while (linestream >> memkey >> val >> kb){
+    while(std::getline(stream, line)){
+      std::replace(line.begin(), line.end(), ':', ' ');
+      std::istringstream linestream(line);
+      linestream >> memkey >> val >> kb;
       if (memkey == "MemTotal") memtotal = std::stof(val);
       if (memkey == "MemFree") memfree = std::stof(val);
     }
@@ -133,8 +132,7 @@ long LinuxParser::ActiveJiffies(int pid) {
 long LinuxParser::ActiveJiffies() {
   vector<string> cpu_time = CpuUtilization();
   long active_jiffies = stol(cpu_time[CPUStates::kUser_]) + stol(cpu_time[CPUStates::kNice_]) + 
-    stol(cpu_time[CPUStates::kSystem_]) + stol(cpu_time[CPUStates::kIdle_]) +
-    stol(cpu_time[CPUStates::kIOwait_]) + stol(cpu_time[CPUStates::kIRQ_]) +
+    stol(cpu_time[CPUStates::kSystem_]) + stol(cpu_time[CPUStates::kIRQ_]) +
     stol(cpu_time[CPUStates::kSoftIRQ_]) + stol(cpu_time[CPUStates::kSteal_]);
   return active_jiffies; 
 }

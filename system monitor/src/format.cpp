@@ -1,5 +1,6 @@
 #include <string>
 #include <stdio.h>
+#include <iomanip>
 
 #include "format.h"
 
@@ -11,10 +12,12 @@ using std::to_string;
 // OUTPUT: HH:MM:SS
 // REMOVE: [[maybe_unused]] once you define the function
 string Format::ElapsedTime(long seconds) {
-    char cstring[10];
-    int num_hour = seconds/3600;
-    int num_min = (seconds-num_hour*3600)/60;
-    int num_sec = seconds-num_hour*3600-num_min*60;
-    sprintf(cstring, "%.2d:%.2d:%.2d", num_hour, num_min, num_sec);
-    return cstring;
+    long h = seconds / 3600;
+    long m = (seconds % 3600) / 60;
+    long s = (seconds % 3600 % 60);
+    std::ostringstream elapsedTime;
+    elapsedTime << std::setw(2) << std::setfill('0') << h 
+                << ":" << std::setw(2) << std::setfill('0') << m
+                << ":" << std::setw(2) << std::setfill('0') << s;
+    return elapsedTime.str();
 }
