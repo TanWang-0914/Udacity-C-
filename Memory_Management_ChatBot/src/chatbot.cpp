@@ -61,7 +61,7 @@ ChatBot &ChatBot::operator=(const ChatBot &source) // copy assignment operator
         return *this;
     }
 
-    if (_image)
+    if (_image != NULL)
     {
         delete _image;
     }

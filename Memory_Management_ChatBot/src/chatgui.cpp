@@ -134,9 +134,6 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
 {
     //// STUDENT CODE
     ////
-
-    
-
     ////
     //// EOF STUDENT CODE
 }
